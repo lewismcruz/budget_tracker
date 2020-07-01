@@ -1,10 +1,12 @@
-const request = window.indexedDB.open("budget", 1)
+const request = indexedDB.open("budget", 1)
 let db;
 
 request.onupgradeneeded = function(event) {
     const db = event.target.result;
-    db.createObjectStore("pending");
-    
+    db.createObjectStore("pending", {
+        autoIncrement: true
+    });
+      
     const budgetStore = db.createObjectStore("budget", {
         keyPath: "transactionID"
     });
