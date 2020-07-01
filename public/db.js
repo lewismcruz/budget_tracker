@@ -27,23 +27,20 @@ request.onsuccess = function(event) {
 
 request.onerror = function(event) {
     console.log("Error message here - This did not work.");
+    console.log(event);
 }
 
 function saveRecord(record) {
     // create a transaction on the pending db with readwrite access
+  const transaction = db.transaction(["pending"], "readwrite");
+  const objectStore = transaction.objectStore("pending");
 
-
-
-    // access your pending object store
-
-
-
-    // add record to your store with add method
+  objectStore.add(record);
 }
 
 function checkDatabase() {
     const transaction = db.transaction(["budget"], "readwrite");
-    const store = transaction.objectStore("budget");
+    const objectStore = transaction.objectStore("budget");
     const getAll = store.getAll();
 
     getAll.onsuccess = function() {
